@@ -1,4 +1,4 @@
-// Enhanced JavaScript for BREZ PAS BREZI Website
+// Enhanced JavaScript for BREZ PAS BREZI Website - Mobile Optimized
 
 document.addEventListener('DOMContentLoaded', function() {
     // Preloader functionality
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add preloading class to body
     body.classList.add('preloading');
     
-    // Simulate loading time (3 seconds)
+    // Simulate loading time (2.5 seconds - faster for better UX)
     setTimeout(() => {
         // Hide preloader
         preloader.classList.add('fade-out');
@@ -20,14 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Remove preloader from DOM after animation
         setTimeout(() => {
             preloader.style.display = 'none';
-        }, 500);
+        }, 400);
         
         // Initialize all other functionality after preloader
         initializeWebsite();
-    }, 3000);
+    }, 2500);
     
     function initializeWebsite() {
-        // Mobile Menu Toggle
+        // Mobile Menu Toggle - Enhanced for better performance
         const hamburger = document.querySelector('.hamburger');
         const navMenu = document.querySelector('.nav-menu');
         
@@ -45,10 +45,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Close mobile menu when clicking on a link
+        // Close mobile menu when clicking on a link - Improved touch handling
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
+                // Add touch feedback
+                link.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    link.style.transform = '';
+                }, 150);
+                
                 if (hamburger && navMenu) {
                     hamburger.classList.remove('active');
                     navMenu.classList.remove('active');
@@ -57,31 +63,34 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Header Scroll Effect
+        // Header Scroll Effect - Optimized for mobile
         const header = document.querySelector('.header');
         let lastScrollTop = 0;
+        let scrollTimeout;
         
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
             // Add scrolled class to header
-            if (scrollTop > 100) {
+            if (scrollTop > 80) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
             
-            // Hide/show header on scroll
-            if (scrollTop > lastScrollTop && scrollTop > 200) {
-                header.style.transform = 'translateY(-100%)';
-            } else {
-                header.style.transform = 'translateY(0)';
-            }
-            
-            lastScrollTop = scrollTop;
+            // Throttled hide/show header on scroll for better performance
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                if (scrollTop > lastScrollTop && scrollTop > 150) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                lastScrollTop = scrollTop;
+            }, 10);
         });
 
-        // Smooth Scrolling for Navigation Links
+        // Smooth Scrolling for Navigation Links - Enhanced for mobile
         const navLinksWithHash = document.querySelectorAll('a[href^="#"]');
         navLinksWithHash.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -92,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (targetSection) {
                     const headerHeight = document.querySelector('.header').offsetHeight;
-                    const targetPosition = targetSection.offsetTop - headerHeight - 20;
+                    const targetPosition = targetSection.offsetTop - headerHeight - 10;
                     
                     window.scrollTo({
                         top: targetPosition,
@@ -102,30 +111,27 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // CTA Button Animation
+        // CTA Button Animation - Simplified for mobile
         const ctaButton = document.querySelector('.cta-button');
         if (ctaButton) {
-            ctaButton.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-6px) scale(1.05)';
+            ctaButton.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
             });
             
-            ctaButton.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
+            ctaButton.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
             });
             
             ctaButton.addEventListener('click', function(e) {
-                // Create ripple effect
-                const ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                this.appendChild(ripple);
-                
+                // Simple feedback instead of complex ripple
+                this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
-                    ripple.remove();
-                }, 600);
+                    this.style.transform = '';
+                }, 200);
             });
         }
 
-        // Scroll-Triggered Animations
+        // Scroll-Triggered Animations - Optimized for mobile
         const animatedElements = document.querySelectorAll('.hero-section, .about-section, .dancers-section, .performers-section, .contact-section, .gallery-section, .services-section, .testimonials-section, .statistics-section, .faq-section, .blog-section');
         
         const observer = new IntersectionObserver((entries) => {
@@ -134,12 +140,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
                     
-                    // Animate child elements with stagger
+                    // Simplified child animations
                     const children = entry.target.querySelectorAll('.hero-text, .hero-image, .about-text, .about-image, .dancers-text, .dancers-image, .performers-text, .performers-image, .contact-info, .contact-form');
                     children.forEach((child, index) => {
                         setTimeout(() => {
-                            child.classList.add('animate-child');
-                        }, index * 200);
+                            child.style.opacity = '1';
+                            child.style.transform = 'translateY(0)';
+                        }, index * 100);
                     });
                 }
             });
@@ -147,12 +154,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         animatedElements.forEach(element => {
             element.style.opacity = '0';
-            element.style.transform = 'translateY(50px)';
-            element.style.transition = 'all 0.8s ease-out';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'all 0.6s ease-out';
             observer.observe(element);
         });
 
-        // Dropdown Menu Functionality
+        // Dropdown Menu Functionality - Simplified for mobile
         const dropdowns = document.querySelectorAll('.dropdown');
         dropdowns.forEach(dropdown => {
             const dropdownMenu = dropdown.querySelector('.dropdown-menu');
@@ -167,10 +174,10 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdown.addEventListener('mouseleave', () => {
                 dropdownMenu.style.opacity = '0';
                 dropdownMenu.style.visibility = 'hidden';
-                dropdownMenu.style.transform = 'translateY(-15px) scale(0.95)';
+                dropdownMenu.style.transform = 'translateY(-10px) scale(0.95)';
             });
             
-            // Mobile touch
+            // Mobile touch - Simplified
             dropdown.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 const isOpen = dropdownMenu.style.opacity === '1';
@@ -178,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (isOpen) {
                     dropdownMenu.style.opacity = '0';
                     dropdownMenu.style.visibility = 'hidden';
-                    dropdownMenu.style.transform = 'translateY(-15px) scale(0.95)';
+                    dropdownMenu.style.transform = 'translateY(-10px) scale(0.95)';
                 } else {
                     dropdownMenu.style.opacity = '1';
                     dropdownMenu.style.visibility = 'visible';
@@ -187,12 +194,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Image Hover Effects
+        // Image Hover Effects - Optimized for mobile
         const images = document.querySelectorAll('.real-image, .hero-img');
         images.forEach(img => {
+            // Touch feedback for mobile
+            img.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            
+            img.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+            
+            // Desktop hover
             img.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.08) rotate(3deg)';
-                this.style.boxShadow = '0 30px 80px rgba(0, 0, 0, 0.4)';
+                this.style.transform = 'scale(1.05) rotate(2deg)';
+                this.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.3)';
             });
             
             img.addEventListener('mouseleave', function() {
@@ -201,30 +218,30 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Parallax Effect for Hero Section
+        // Parallax Effect for Hero Section - Simplified for mobile
         const heroSection = document.querySelector('.hero-section');
-        if (heroSection) {
+        if (heroSection && window.innerWidth > 768) {
             window.addEventListener('scroll', () => {
                 const scrolled = window.pageYOffset;
-                const rate = scrolled * -0.5;
+                const rate = scrolled * -0.3;
                 heroSection.style.transform = `translateY(${rate}px)`;
             });
         }
 
-        // Loading Animation for Logo
+        // Loading Animation for Logo - Simplified
         const logo = document.querySelector('.logo');
         if (logo) {
             logo.style.opacity = '0';
-            logo.style.transform = 'scale(0.8)';
+            logo.style.transform = 'scale(0.9)';
             
             setTimeout(() => {
-                logo.style.transition = 'all 0.8s ease-out';
+                logo.style.transition = 'all 0.6s ease-out';
                 logo.style.opacity = '1';
                 logo.style.transform = 'scale(1)';
-            }, 500);
+            }, 300);
         }
 
-        // Enhanced Accessibility Features
+        // Enhanced Accessibility Features - Mobile optimized
         const focusableElements = document.querySelectorAll('a, button, input, textarea, select');
         focusableElements.forEach(element => {
             element.addEventListener('focus', function() {
@@ -237,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Keyboard Navigation for Dropdowns
+        // Keyboard Navigation for Dropdowns - Simplified
         dropdowns.forEach(dropdown => {
             const dropdownToggle = dropdown.querySelector('.nav-link');
             const dropdownMenu = dropdown.querySelector('.dropdown-menu');
@@ -250,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (isOpen) {
                         dropdownMenu.style.opacity = '0';
                         dropdownMenu.style.visibility = 'hidden';
-                        dropdownMenu.style.transform = 'translateY(-15px) scale(0.95)';
+                        dropdownMenu.style.transform = 'translateY(-10px) scale(0.95)';
                     } else {
                         dropdownMenu.style.opacity = '1';
                         dropdownMenu.style.visibility = 'visible';
@@ -260,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Enhanced Performance: Throttle scroll events
+        // Enhanced Performance: Throttle scroll events - Mobile optimized
         let ticking = false;
         function updateOnScroll() {
             // Scroll-based animations here
@@ -274,12 +291,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Gallery Filter Functionality
+        // Gallery Filter Functionality - Mobile optimized
         const filterButtons = document.querySelectorAll('.filter-btn');
         const galleryItems = document.querySelectorAll('.gallery-item');
 
         filterButtons.forEach(button => {
             button.addEventListener('click', function() {
+                // Add touch feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
                 // Remove active class from all buttons
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 // Add active class to clicked button
@@ -292,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     if (filter === 'all' || category === filter) {
                         item.style.display = 'block';
-                        item.style.animation = 'fadeInUp 0.6s ease-out';
+                        item.style.animation = 'fadeInUp 0.4s ease-out';
                     } else {
                         item.style.display = 'none';
                     }
@@ -300,44 +323,45 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Service Button Functionality
+        // Service Button Functionality - Mobile optimized
         const serviceButtons = document.querySelectorAll('.service-btn');
         serviceButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const serviceName = this.closest('.service-card').querySelector('h3').textContent;
-                const servicePrice = this.closest('.service-card').querySelector('.price').textContent;
                 
-                // Add ripple effect
-                const ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                this.appendChild(ripple);
-                
+                // Simple feedback
+                this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
-                    ripple.remove();
-                }, 600);
+                    this.style.transform = '';
+                }, 200);
                 
                 // Show confirmation dialog
                 setTimeout(() => {
-                    const confirmed = confirm(`A dëshironi të rezervoni "${serviceName}" për ${servicePrice}?`);
+                    const confirmed = confirm(`A dëshironi të rezervoni "${serviceName}"?`);
                     if (confirmed) {
                         alert('Faleminderit! Rezervimi juaj u konfirmua. Do të ju kontaktojmë së shpejti për detajet!');
                     }
-                }, 300);
+                }, 200);
             });
         });
 
-        // Gallery Item Click Handler
+        // Gallery Item Click Handler - Mobile optimized
         galleryItems.forEach(item => {
             item.addEventListener('click', function() {
-                const title = this.querySelector('.gallery-overlay h3').textContent;
-                const description = this.querySelector('.gallery-overlay p').textContent;
+                // Simple feedback
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
                 
                 // Create lightbox effect (simple alert for now)
-                alert(`${title}\n\n${description}\n\nKlikoni OK për të parë fotën në madhësi të plotë.`);
+                setTimeout(() => {
+                    alert('Klikoni OK për të parë fotën në madhësi të plotë.');
+                }, 200);
             });
         });
 
-        // FAQ Toggle Functionality
+        // FAQ Toggle Functionality - Mobile optimized
         const faqItems = document.querySelectorAll('.faq-item');
         
         faqItems.forEach((item, index) => {
@@ -347,6 +371,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             question.addEventListener('click', function(e) {
                 e.preventDefault();
+                
+                // Add touch feedback
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
                 
                 // Close all other FAQ items
                 faqItems.forEach(otherItem => {
@@ -368,28 +398,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Opening
                     item.classList.add('active');
                     icon.style.transform = 'rotate(180deg)';
-                    
-                    // Add ripple effect
-                    const ripple = document.createElement('span');
-                    ripple.style.position = 'absolute';
-                    ripple.style.borderRadius = '50%';
-                    ripple.style.background = 'rgba(211, 47, 47, 0.3)';
-                    ripple.style.transform = 'scale(0)';
-                    ripple.style.animation = 'ripple 0.6s linear';
-                    ripple.style.pointerEvents = 'none';
-                    ripple.style.left = '50%';
-                    ripple.style.top = '50%';
-                    ripple.style.width = '20px';
-                    ripple.style.height = '20px';
-                    ripple.style.marginLeft = '-10px';
-                    ripple.style.marginTop = '-10px';
-                    
-                    question.style.position = 'relative';
-                    question.appendChild(ripple);
-                    
-                    setTimeout(() => {
-                        ripple.remove();
-                    }, 600);
                 }
             });
             
@@ -402,13 +410,13 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Statistics Counter Animation
+        // Statistics Counter Animation - Mobile optimized
         const statNumbers = document.querySelectorAll('.stat-number');
         const statisticsSection = document.querySelector('.statistics-section');
 
         function animateCounter(element, target) {
             let current = 0;
-            const increment = target / 100;
+            const increment = target / 50; // Faster animation
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
@@ -416,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     clearInterval(timer);
                 }
                 element.textContent = Math.floor(current);
-            }, 20);
+            }, 30);
         }
 
         // Intersection Observer for Statistics
@@ -436,33 +444,40 @@ document.addEventListener('DOMContentLoaded', function() {
             statsObserver.observe(statisticsSection);
         }
 
-        // Blog Button Functionality
+        // Blog Button Functionality - Mobile optimized
         const blogButtons = document.querySelectorAll('.blog-btn');
         blogButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const blogTitle = this.closest('.blog-card').querySelector('h3').textContent;
                 
-                // Add ripple effect
-                const ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                this.appendChild(ripple);
-                
+                // Simple feedback
+                this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
-                    ripple.remove();
-                }, 600);
+                    this.style.transform = '';
+                }, 200);
                 
                 // Show blog article (simple alert for now)
                 setTimeout(() => {
                     alert(`Artikulli "${blogTitle}" do të hapet së shpejti!\n\nPërmbajtja e plotë do të jetë e disponueshme në versionin e ardhshëm.`);
-                }, 300);
+                }, 200);
             });
         });
 
-        // Testimonial Card Hover Effects
+        // Testimonial Card Hover Effects - Mobile optimized
         const testimonialCards = document.querySelectorAll('.testimonial-card');
         testimonialCards.forEach(card => {
+            // Touch feedback
+            card.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            card.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+            
+            // Desktop hover
             card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-15px) scale(1.02)';
+                this.style.transform = 'translateY(-10px) scale(1.02)';
             });
             
             card.addEventListener('mouseleave', function() {
@@ -470,29 +485,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Scroll to Top Button
-        const scrollToTopBtn = document.createElement('button');
-        scrollToTopBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-        scrollToTopBtn.className = 'scroll-to-top';
-        document.body.appendChild(scrollToTopBtn);
 
-        scrollToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
 
-        // Show/hide scroll to top button
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollToTopBtn.style.display = 'flex';
-            } else {
-                scrollToTopBtn.style.display = 'none';
-            }
-        });
-
-        // Contact Form Handling with WhatsApp Integration
+        // Contact Form Handling with WhatsApp Integration - Mobile optimized
         const contactForm = document.querySelector('.contact-form form');
         if (contactForm) {
             contactForm.addEventListener('submit', function(e) {
@@ -524,8 +519,8 @@ ${message}
                 // Encode message for WhatsApp URL
                 const encodedMessage = encodeURIComponent(whatsappMessage);
                 
-                // WhatsApp phone number (replace with actual number)
-                const phoneNumber = '38971294914'; // Numri i vërtetë: +389 71 294 914 (pa +)
+                // WhatsApp phone number
+                const phoneNumber = '38971294914';
                 
                 // Create WhatsApp URL
                 const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -548,15 +543,21 @@ ${message}
             });
         }
 
-        // WhatsApp Direct Contact Buttons
+        // WhatsApp Direct Contact Buttons - Mobile optimized
         const whatsappButtons = document.querySelectorAll('.whatsapp-btn');
         whatsappButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 
+                // Add touch feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+                
                 const service = this.getAttribute('data-service') || 'Informacione';
-                const phoneNumber = '38971294914'; // Numri i vërtetë: +389 71 294 914
+                const phoneNumber = '38971294914';
                 
                 const message = `Përshëndetje! Jam i interesuar për ${service} nga BREZ PAS BREZI.
                 
@@ -565,16 +566,12 @@ Ju lutem më dërgoni më shumë informacione.`;
                 const encodedMessage = encodeURIComponent(message);
                 const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
                 
-                // Test if number is valid
-                console.log('Testing WhatsApp number:', phoneNumber);
-                console.log('WhatsApp URL:', whatsappURL);
-                
                 // Open WhatsApp immediately
                 window.open(whatsappURL, '_blank');
             });
         });
 
-        // Logo Link Smooth Scrolling
+        // Logo Link Smooth Scrolling - Mobile optimized
         const logoLink = document.querySelector('.logo-link');
         if (logoLink) {
             logoLink.addEventListener('click', function(e) {
@@ -583,7 +580,7 @@ Ju lutem më dërgoni më shumë informacione.`;
                 const homeSection = document.querySelector('#home');
                 if (homeSection) {
                     const headerHeight = document.querySelector('.header').offsetHeight;
-                    const targetPosition = homeSection.offsetTop - headerHeight - 20;
+                    const targetPosition = homeSection.offsetTop - headerHeight - 10;
                     
                     window.scrollTo({
                         top: targetPosition,
@@ -593,11 +590,11 @@ Ju lutem më dërgoni më shumë informacione.`;
             });
         }
 
-        console.log('🎭 BREZ PAS BREZI - Website u ngarkua me sukses! Të gjitha funksionalitetet janë aktive.');
+        console.log('🎭 BREZ PAS BREZI - Website u ngarkua me sukses! Të gjitha funksionalitetet janë aktive dhe optimizuar për mobile.');
     }
 });
 
-// Test WhatsApp Number Function
+// Test WhatsApp Number Function - Mobile optimized
 function testWhatsAppNumber() {
     const phoneNumber = '38971294914';
     
