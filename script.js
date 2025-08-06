@@ -520,7 +520,7 @@ ${message}
                 const encodedMessage = encodeURIComponent(whatsappMessage);
                 
                 // WhatsApp phone number
-                const phoneNumber = '38971294914';
+                const phoneNumber = '38978665724';
                 
                 // Create WhatsApp URL
                 const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -557,7 +557,7 @@ ${message}
                 }, 200);
                 
                 const service = this.getAttribute('data-service') || 'Informacione';
-                const phoneNumber = '38971294914';
+                const phoneNumber = '38978665724';
                 
                 const message = `Përshëndetje! Jam i interesuar për ${service} nga BREZ PAS BREZI.
                 
@@ -596,7 +596,7 @@ Ju lutem më dërgoni më shumë informacione.`;
 
 // Test WhatsApp Number Function - Mobile optimized
 function testWhatsAppNumber() {
-    const phoneNumber = '38971294914';
+    const phoneNumber = '38978665724';
     
     // Try to detect service from button context
     let service = 'Informacione';
